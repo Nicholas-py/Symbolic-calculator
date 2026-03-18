@@ -11,16 +11,18 @@ r = Variable('r')
 def asserteq(a,b):
     try:
         assert a == b
-    except AssertionError:
+    except:
         print('Assertion error!')
         print(a,'==',b,)
         try:
             print('Types:','(',type(a),type(b),')')
+            print((a.terms[0].canaddcombine(a.terms[1])))
             print('Simplified form:',a.simplified(),'==', b.simplified())
             print('Difference:',a-b)
-        except:
-            pass
+        except Exception as e:
+            print(e)
         exit()
+
 asserteq((-r**2+1)/(r**2+1)+(r**2)/(r**2+1),1/(r**2+1))
 
 asserteq(MathTerm(2)*(Variable('x')), 2*x)

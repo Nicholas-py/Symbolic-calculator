@@ -160,15 +160,17 @@ def Riemannup(a,b,u,v):
     for c in range(dim):
         suum += christoffel(a,u,c)*christoffel(c,b,v)
         print('t3 ('+str(c)+') ->',christoffel(a,u,c)*christoffel(c,b,v))
-        suum -= christoffel(a,v,c)*christoffel(c,b,u)
         print('t4 ('+str(c)+') ->',christoffel(a,v,c)*christoffel(c,b,u))
+        suum -= christoffel(a,v,c)*christoffel(c,b,u)
 
     riemannups[a][b][u][v] = suum.simplified()
     print(suum)
     return suum.simplified()
-
-print(Riemannup(0,1,0,1))
-exit()
+try:
+    print(Riemannup(0,1,0,1))
+except Exception as e:
+    print(e)
+#exit()
 #R_abuv = g_acR^c_buv
 def Riemanndown(a,b,u,v):
     if riemanndowns[a][b][u][v] is not None:

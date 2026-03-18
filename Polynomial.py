@@ -60,7 +60,14 @@ class Polynomial(MathInterface):
                 toadds.append(self.terms.pop(i-j))
                 j += 1
         for i in toadds:
-            self.terms = (self+i).terms
+            for j in i.terms:
+                for k in range(len(self.terms)):
+                    if self.terms[k].canaddcombine(j):
+                        self.terms[k] += j
+                        break
+                else:
+                    self.terms.append(j)
+
 
     def clearzeroes(self):
         j = 0
@@ -77,6 +84,8 @@ class Polynomial(MathInterface):
         c = self.copy()
         for i in range(len(c.terms)):
             c.terms[i] = c.terms[i].simplified()
+        c.removepolynomials()
+        c.combineterms()
         c.removepolynomials()
         c.combineterms()
         c.clearzeroes()
@@ -134,16 +143,21 @@ class Polynomial(MathInterface):
     def __add__(self,other):
         if other == 0:
             return self.copy()
+        new = self.copy()
+        
         if type(other) == Polynomial:
-            new = self.copy()
             new.terms += other.copy().terms
             return new
         
         if isinstance(other, MathInterface):
-            new = self.copy()
+            # for i in range(len(new.terms)):
+            #     if other.canaddcombine(new.terms[i]):
+            #         new.terms[i] += other
+            #         break
+            # else:      
             new.terms.append(other)
             return new
-        if isinstance(other, Number) or isinstance(other, str):
+        if isinstance(other, Number):
             return self + MathTerm(other)
         return NotImplemented
     

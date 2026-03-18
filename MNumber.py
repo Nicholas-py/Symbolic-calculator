@@ -23,7 +23,7 @@ class MNumber(MathInterface):
         return MNumber(self.val)
     
     def canaddcombine(self, other):
-        return isinstance(other, MNumber) or isinstance(other, Number) or isinstance(other, Polynomial)
+        return isinstance(other, MNumber) or isinstance(other, Number) or isinstance(other, Polynomial) or isinstance(other, RationalFunction)
     
     def equalszero(self):
         return self.val == 0
@@ -58,3 +58,4 @@ class MNumber(MathInterface):
 a = MNumber(1)
 
 from Polynomial import Polynomial
+from RationalFunction import RationalFunction

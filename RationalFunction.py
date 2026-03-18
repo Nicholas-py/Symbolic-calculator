@@ -4,7 +4,7 @@ from warnings import warn
 from Polynomial import Polynomial
 
 #Guaranteed a numerator, but not a denominator
-class RationalFunction(Polynomial):
+class RationalFunction(MathInterface):
     def __init__(self,arg=None):
         self.numerator = None
         self.denominator = None
@@ -114,7 +114,7 @@ class RationalFunction(Polynomial):
             a = RationalFunction()
             a.denominator = self.denominator
             a.numerator = self.numerator + other * self.denominator
-            return a
+            return a.simplified()
         return NotImplemented
     
     def __mul__(self, other):

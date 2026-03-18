@@ -157,7 +157,7 @@ class MathTerm(MathInterface):
 
         tokill = []
         for i in range(len(self.terms)):
-            if isinstance(self.terms[i].term, MathTerm) or isinstance(self.terms[i].term,MNumber):
+            if isinstance(self.terms[i].term, MathTerm) or isinstance(self.terms[i].term,MNumber) or isinstance(self.terms[i].term, Polynomial):
                 tokill.append(i)
             
         savedcopy = self.copy()
