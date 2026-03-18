@@ -39,10 +39,10 @@ def grderiv(expression, respectto):
     if isinstance(expression, Number):
         return 0
     exp =  expression.derivative(respectto)
-    #for i in coordnames:
-    #    for j in coordnames:
-    #        if i != j:
-    #            exp = exp.evaluate(i+','+j,0)
+    for i in coordnames:
+        for j in coordnames:
+            if i != j:
+                exp = exp.evaluate(i+','+j,0)
     return exp
 
 def expressionify(metric):
