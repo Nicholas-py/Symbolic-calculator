@@ -107,7 +107,7 @@ class MathTerm(MathInterface):
             a = self.copy()
             a.coefficient *= other.val
             return a
-        elif isinstance(other, RationalFunction):
+        elif isinstance(other, RationalFunction) or isinstance(other, Polynomial):
             return NotImplemented
         elif isinstance(other, Variable):
             self = self.copy()

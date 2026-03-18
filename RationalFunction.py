@@ -55,13 +55,7 @@ class RationalFunction(Polynomial):
         return RationalFunction([numerator, denominator])
 
     def canaddcombine(self, other):
-        if isinstance(other, Polynomial):
-            return True
-        if self.denominator == None:
-            return True
-        if isinstance(other, RationalFunction):
-            return True
-        return False
+        return True
                 
     
     def copy(self):

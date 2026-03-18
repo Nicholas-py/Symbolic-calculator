@@ -24,7 +24,7 @@ theta = Variable('θ')
 #]
 #[[θ²,0],[0,r²]] -> cool!
 #[[-1,0],[0,r²]] -> hyperbolic coords?
-metric = [[1,0],
+metric = [[2*theta,0],
           [0,1+r**2]]
 dim = 2
 constantcoords = ''
@@ -146,7 +146,6 @@ for u in range(dim):
 
 
 
-
 riemannups = [[[[None for _ in range(dim)] for _ in range(dim)] for _ in range(dim)] for _ in range(dim)]
 riemanndowns = [[[[None for _ in range(dim)] for _ in range(dim)] for _ in range(dim)] for _ in range(dim)]
 #Riemann^a_buv = CH^a_bv,u - CH^a_bu,v + CH^a_uc CH^c_bv - CH^a_vc CH^c_bu
@@ -155,13 +154,21 @@ def Riemannup(a,b,u,v):
         return riemannups[a][b][u][v]
     suum = Ex()
     suum += grderiv(christoffel(a,b,v),u)
+    print('t1->',grderiv(christoffel(a,b,v),u))
     suum -= grderiv(christoffel(a,b,u),v)
+    print('t2->',grderiv(christoffel(a,b,u),v))
     for c in range(dim):
         suum += christoffel(a,u,c)*christoffel(c,b,v)
+        print('t3 ('+str(c)+') ->',christoffel(a,u,c)*christoffel(c,b,v))
         suum -= christoffel(a,v,c)*christoffel(c,b,u)
+        print('t4 ('+str(c)+') ->',christoffel(a,v,c)*christoffel(c,b,u))
+
     riemannups[a][b][u][v] = suum.simplified()
+    print(suum)
     return suum.simplified()
 
+print(Riemannup(0,1,0,1))
+exit()
 #R_abuv = g_acR^c_buv
 def Riemanndown(a,b,u,v):
     if riemanndowns[a][b][u][v] is not None:
@@ -174,7 +181,7 @@ def Riemanndown(a,b,u,v):
     return suum.simplified()
 
 #print(metric[1][1], type(metric[1][1].terms[0].terms[1].term))
-print(Riemanndown(1,0,1,0))
+print(Riemannup(0,1,0,1))
 #exit()
 for i in range(dim):
     for j in range(dim):
