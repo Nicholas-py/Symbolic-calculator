@@ -56,7 +56,7 @@ class Ln(MFunction):
 
 
     def oneoverself(self):
-        return RationalFunction(1,self.contents)
+        return RationalFunction([MNumber(1),Ln(self.contents)])
 
     def evaluate(self, var, value):
         interior = self.contents.evaluate(var, value)

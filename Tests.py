@@ -4,6 +4,7 @@ from MathTerm import MathTerm
 from numbers import Number
 from MNumber import MNumber
 from Variable import Variable
+from LnFunc import Ln
 
 x = Variable('x')
 r = Variable('r')
@@ -55,7 +56,7 @@ rd = rt + 2
 asserteq(rd, x + 1)
 asserteq(ex , x**2 - 2*x +1)
 
-big = (rt**16+rt**3+rd**3)/(rt**5+rd**22)
+#big = (rt**16+rt**3+rd**3)/(rt**5+rd**22)
 asserteq(ex/rt, rt)
 asserteq(1/(1/rt),rt)
 asserteq(ex/rd, (x**2-2*x+1)/(x+1))
@@ -74,6 +75,29 @@ asserteq(len((r*r).terms),1)
 asserteq((x*r**2).derivative('r').derivative('x').evaluate('r,x',0).evaluate('x,r',0),2*r)
 
 asserteq(Polynomial(-1)-(-r**2/(r**2+1)),-1/(r**2+1))
+asserteq(str(MathTerm([Variable('x')])), 'x')
+
+from simplify import simplify
+
+cursed = Polynomial(RationalFunction([Polynomial([MathTerm([Variable('x'),Variable('x')]),Variable('x')**2]),RationalFunction([Polynomial(Variable('y')),Variable('x')])]))
+asserteq(str(simplify(cursed)),'(2x³)/(y)')
+cursed = Polynomial(RationalFunction([Polynomial([MathTerm([Variable('x'),Variable('x')]),Variable('x')**2]),RationalFunction([Polynomial(MNumber(1)),Variable('x')])]))
+asserteq(str(simplify(cursed)),'2x³')
+cursed = Polynomial([RationalFunction([MNumber(1),MathTerm(MathTerm(Variable('x')))]),
+                     MathTerm(MNumber(1)),
+                     RationalFunction([MNumber(2),MathTerm(MathTerm(Variable('x')))])])
+asserteq(str(simplify(cursed)),'((3 + x))/(x)')
+asserteq(simplify(cursed),cursed)
+
+asserteq(simplify(x/x),1)
+
+
+asserteq(str(simplify(Ln(x)/Ln(x))),'1')
+
+
+
+
+
 
 
 try:

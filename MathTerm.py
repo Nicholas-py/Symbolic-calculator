@@ -20,9 +20,14 @@ class MathTerm(MathInterface):
         elif arg == '':
             self.coefficient, self.terms = 1, []
         elif isinstance(arg, list):
-            self.coefficient, self.terms = 1, []
+            a = MathTerm()
             for i in arg:
-                self *= i
+                a *= i
+            self.coefficient = a.coefficient
+            self.terms = a.terms
+        elif isinstance(arg, MNumber):
+            self.coefficient = arg.val
+            self.terms = []
         elif isinstance(arg, MathInterface):
             self.coefficient = 1
             self.terms = [TermPower(arg.copy(), 1)]
