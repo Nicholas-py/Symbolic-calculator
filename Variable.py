@@ -84,6 +84,11 @@ class Variable(MathInterface):
     def oneoverself(self):
         mt = MathTerm(self)
         return 1/mt
+    
+    def __eq__(self, other):
+        if isinstance(other, Variable):
+            return self.var == other.var
+        return super().__eq__(other)
 
 
 from Polynomial import Polynomial

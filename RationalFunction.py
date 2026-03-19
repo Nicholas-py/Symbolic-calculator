@@ -124,11 +124,11 @@ class RationalFunction(MathInterface):
             d2 = other.denominator if other.denominator is not None else MNumber(1)
             a.denominator = d1*d2
             a.numerator = self.numerator * other.numerator
-            return a.simplified()
+            return a
         elif isinstance(other, MathInterface) or isinstance(other, Number):
             a = self.copy()
             a.numerator = a.numerator * other
-            return a.simplified()
+            return a
         return NotImplemented
                 
     def __pow__(self, other):

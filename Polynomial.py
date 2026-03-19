@@ -7,12 +7,16 @@ powerchars = '⁰¹²³⁴⁵⁶⁷⁸⁹'
 
 
 class Polynomial(MathInterface):
-    def __init__(self, string='', terms = []):
-        if isinstance(string, Number):
-            self.terms = [MathTerm(string)]
-        elif string != '':
-            self.terms = self.getterms(string)
+    def __init__(self, arg='', terms = []):
+        if isinstance(arg, Number):
+            self.terms = [MNumber(arg)]
+        elif isinstance(arg, str) and arg != '':
+            self.terms = self.getterms(arg)
             self.combineterms()
+        elif isinstance(arg, list):
+            self.terms = arg
+        elif isinstance(arg, MathInterface):
+            self.terms = [arg]
         elif terms != []:
             for i in range(len(terms)):
                 if isinstance(terms[i], Number):
@@ -105,7 +109,6 @@ class Polynomial(MathInterface):
             new = Polynomial()
             for i in self.terms:
                 new += other*i
-            new = new.simplified()
             return new
         elif isinstance(other, Number):
             new = Polynomial()
@@ -135,7 +138,7 @@ class Polynomial(MathInterface):
             return ''
         string = string.replace('+', ' + ')
         string = string[0] + string[1:].replace('-',' - ')
-        return string
+        return '('+string+')'
     
     def latex(self):
         return self.__repr__(latex = True)     

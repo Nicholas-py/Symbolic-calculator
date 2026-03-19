@@ -3,18 +3,11 @@
 from MathInterface import MathInterface
 from numbers import Number
 from math import log
-
+from Function import MFunction
 
 #+, -, *, /, should support ordinary numbers
 #Note that val is accessed in MathTerm
-class Ln(MathInterface):
-    def __init__(self, arg=1):
-        if isinstance(arg, Number):
-            arg = MNumber(arg)
-        if isinstance(arg, MathInterface):
-            self.contents = arg
-        else:
-            raise TypeError("Incorrect args to Ln(): "+str(arg))
+class Ln(MFunction):
     
     def __repr__(self):
         return 'ln('+str(self.contents)+')'

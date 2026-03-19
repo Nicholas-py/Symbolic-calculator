@@ -101,7 +101,6 @@ class MathTerm(MathInterface):
                 else:
                     new.terms.append(i.copy())
             new.coefficient *= other.coefficient
-            new = new.simplified()
             return new
         elif isinstance(other, MNumber):
             a = self.copy()
