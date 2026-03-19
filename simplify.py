@@ -1,10 +1,3 @@
-from Polynomial import Polynomial
-from RationalFunction import RationalFunction
-from MathTerm import MathTerm, TermPower
-from MathInterface import MathInterface
-from MNumber import MNumber
-from Variable import Variable
-from Function import MFunction
 
 def getnumdenom(obj):
     denominator = MNumber(1)
@@ -259,7 +252,11 @@ def simplify(obj):
     return RationalFunction([numerator, denominator])
 
 
+from Polynomial import Polynomial
+from RationalFunction import RationalFunction
+from MathTerm import MathTerm, TermPower
+from MathInterface import MathInterface
+from MNumber import MNumber
+from Variable import Variable
+from Function import MFunction
 
-cursed = Polynomial([RationalFunction([MNumber(1),MathTerm(MathTerm(Variable('x')))]),
-                     MathTerm(MNumber(1)),
-                     RationalFunction([MNumber(2),MathTerm(MathTerm(Variable('x')))])])

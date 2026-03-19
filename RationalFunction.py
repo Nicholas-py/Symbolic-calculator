@@ -41,19 +41,6 @@ class RationalFunction(MathInterface):
         if self.denominator is None:
             warn('RationalFunction '+str(self.numerator)+' created without denominator')
 
-    def simplified(self):
-        numerator = self.numerator.simplified()
-        if self.denominator is None:
-            return numerator
-        denominator = self.denominator.simplified()
-        if denominator == 0:
-            raise ZeroDivisionError()
-        elif denominator == 1:
-            return numerator
-        elif isinstance(denominator, MNumber):
-            return numerator/denominator
-        return RationalFunction([numerator, denominator])
-
     def canaddcombine(self, other):
         return True
                 

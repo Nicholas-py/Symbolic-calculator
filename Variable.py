@@ -38,9 +38,6 @@ class Variable(MathInterface):
             backterms.sort()
             return Variable(splt[0] + ',('+''.join(backterms)+')')
 
-    def simplified(self):
-        return self
-
     def evaluate(self, var, value):
         if var == self.var:
             return value

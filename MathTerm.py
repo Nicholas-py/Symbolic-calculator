@@ -153,52 +153,6 @@ class MathTerm(MathInterface):
     def equalszero(self):
         return self.coefficient == 0
 
-    def simplified(self):
-        self = self.copy()
-        
-        for i in range(len(self.terms)):
-            self.terms[i].term = self.terms[i].term.simplified()
-
-        tokill = []
-        for i in range(len(self.terms)):
-            if isinstance(self.terms[i].term, MathTerm) or isinstance(self.terms[i].term,MNumber) or isinstance(self.terms[i].term, Polynomial):
-                tokill.append(i)
-            
-        savedcopy = self.copy()
-        for i in range(len(tokill)):
-            self.terms.pop(tokill[i]-i)
-        for i in range(len(tokill)):
-            tp = savedcopy.terms[tokill[i]]
-            self = self * (tp.term)**(tp.power)
-        tokill = []
-        for i in range(len(self.terms)):
-            for j in range(len(self.terms)):
-                if i == j or i in tokill or j in tokill:
-                    continue
-                if self.terms[i].term.canaddcombine(self.terms[j].term):
-                    self.terms[i].power += self.terms[j].power
-                    self.terms[j].power = 0
-                    tokill.append(j)
-
-        for i in range(len(tokill)):
-            self.terms.pop(tokill[i]-i)
-
-        tokill = []
-        for i in range(len(self.terms)):
-            if self.terms[i].power == 0:
-                tokill.append(i)
-        for i in range(len(tokill)):
-            self.terms.pop(tokill[i]-i)
-
-        if self.coefficient == 0:
-            return MNumber(0)
-        if len(self.terms) == 0:
-            return MNumber(self.coefficient)
-        if len(self.terms) == 1 and self.terms[0].power == 1:
-            return self.terms[0].term * self.coefficient
-        return self
-        
-
     def copy(self):
         new = MathTerm()
         new.coefficient = self.coefficient

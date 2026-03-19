@@ -11,8 +11,6 @@ class Ln(MFunction):
     
     def __repr__(self):
         return 'ln('+str(self.contents)+')'
-    def latex(self):
-        return 'ln('+str(self.contents)+')'
     
     def copy(self):
         return Ln(self.contents.copy())
@@ -55,21 +53,12 @@ class Ln(MFunction):
         return MathTerm([self.copy(),other.copy()])
 
 
-    def oneoverself(self):
-        return RationalFunction([MNumber(1),Ln(self.contents)])
-
     def evaluate(self, var, value):
         interior = self.contents.evaluate(var, value)
         if isinstance(interior, MNumber):
             return MNumber(log(interior.val))
         return Ln(interior)
-    
-    def simplified(self):
-        interior = self.contents.simplified()
-        if isinstance(interior, MNumber):
-            return MNumber(log(interior.val))
-        return Ln(interior)
-    
+        
 
 from MNumber import MNumber
 from Polynomial import Polynomial

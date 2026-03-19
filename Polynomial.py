@@ -84,22 +84,6 @@ class Polynomial(MathInterface):
         return True
         
 
-    def simplified(self):
-        c = self.copy()
-        for i in range(len(c.terms)):
-            c.terms[i] = c.terms[i].simplified()
-        c.removepolynomials()
-        c.combineterms()
-        c.removepolynomials()
-        c.combineterms()
-        c.clearzeroes()
-
-        if len(c.terms) == 0:
-            return MNumber(0)
-        if len(c.terms) == 1:
-            return c.terms[0]
-        return c
-
     def __mul__(self,other):
         if other == 0:
             return MNumber(0)

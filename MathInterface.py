@@ -7,9 +7,9 @@ class MathInterface(ABC):
     def __init__(self, arg):
         pass
 
-    @abstractmethod
     def simplified(self):
-        pass
+        from simplify import simplify
+        return simplify(self)
 
     @abstractmethod
     def copy(self):

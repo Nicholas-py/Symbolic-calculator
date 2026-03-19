@@ -15,3 +15,11 @@ class MFunction(MathInterface):
         if type(other) == type(self):
             return self.contents == other.contents
         return super().__eq__(other)
+    
+    def oneoverself(self):
+        return RationalFunction([MNumber(1), self.copy()])
+    def latex(self):
+        return str(self)
+
+
+from RationalFunction import RationalFunction
