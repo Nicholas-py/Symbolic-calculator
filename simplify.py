@@ -78,7 +78,7 @@ def combinemathterms(mathterm):
     for i in range(len(mathterm.terms)):
         if mathterm.terms[i].power == 0:
             used.add(i)
-    for i, item in enumerate(used):
+    for i, item in enumerate(sorted(used)):
         mathterm.terms.pop(item-i)
 
 def matches(mt1, mt2):
@@ -101,15 +101,16 @@ def combineaddterms(polylist):
         for j in range(i+1,len(polylist)):
             if i in used or j in used:
                 continue
-            if matches(polylist[i], polylist[j]):
+            if matches(polylist[i], polylist[j]) and matches(polylist[j], polylist[i]):
                 polylist[i].coefficient += polylist[j].coefficient
                 used.add(j)
 
     for i in range(len(polylist)):
         if polylist[i].coefficient == 0:
             used.add(i)
-
-    for i, item in enumerate(used):
+    print(polylist, used)
+    for i, item in enumerate(sorted(used)):
+        print(i, item)
         polylist.pop(item-i)
     
 
@@ -126,7 +127,7 @@ def candivide(term, divisor):
             return False
         return term == divisor
     elif isinstance(term,MNumber):
-        return isinstance(divisor, MNumber) and (term/divisor).val > 1
+        return isinstance(divisor, MNumber) and (term/divisor).val %1 == 0
     elif isinstance(term, MathTerm):
         for subterm in term.terms:
             if subterm.term == divisor:
@@ -174,13 +175,14 @@ def commondivide(terms, divisor):
             for j,subterm in enumerate(term.terms):
                 if subterm.term == divisor:
                     subterm.power -= 1
-                if subterm.power == 0:
-                    term.terms.pop(j)
-                break
+                    if subterm.power == 0:
+                        term.terms.pop(j)
+                    break
+                
             else:
                 raise TypeError('Not found')
         elif isinstance(term, MNumber):
-            assert isinstance(divisor, MNumber())
+            assert isinstance(divisor, MNumber)
             terms[i] = terms[i]/divisor
         else:
             raise TypeError("Incorrect type when dividing")
