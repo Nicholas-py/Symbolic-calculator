@@ -59,8 +59,6 @@ class Variable(MathInterface):
         if not self.canaddcombine(other):
             return Polynomial(terms=[self.copy(),other.copy()])
         #Can be combined with other
-        if isinstance(other, Polynomial):
-            return other + self
         elif isinstance(other, Variable):
             return self * 2
         return NotImplemented
