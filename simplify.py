@@ -1,4 +1,6 @@
 
+tdict = {}
+
 def getnumdenom(obj):
     denominator = MNumber(1)
     if isinstance(obj, RationalFunction):
@@ -21,6 +23,8 @@ def getnumdenom(obj):
 def removerationalsfrom(nterms, dterms):
     for i in range(len(nterms)):
         if isinstance(nterms[i], RationalFunction):
+            #with open('log.txt','a+') as file:
+             #   file.write('\neliminating denominator, '+str(type(nterms[i].denominator))+str(len(nterms[i].denominator.terms))+'   '+str(len(nterms)+len(dterms)))
             for j in range(len(nterms)):
                 if i != j:
                     nterms[j] *= nterms[i].denominator
@@ -90,35 +94,48 @@ def matches(mt1, mt2):
             return False
     return True
 
-
-def combineaddterms(polylist):
-    used = set()
+def promotetomathterm(polylist):
     for i in range(len(polylist)):
         if not isinstance(polylist[i], MathTerm):
             polylist[i] = MathTerm(polylist[i])
 
+
+def getmatches(polylist):
+    used = set()
     for i in range(len(polylist)):
         for j in range(i+1,len(polylist)):
             if i in used or j in used:
-                continue
+                return
             if matches(polylist[i], polylist[j]) and matches(polylist[j], polylist[i]):
                 polylist[i].coefficient += polylist[j].coefficient
                 used.add(j)
 
+    return used
+
+def clearzeroes(polylist):
+    used = set()
     for i in range(len(polylist)):
         if polylist[i].coefficient == 0:
             used.add(i)
-    print(polylist, used)
-    for i, item in enumerate(sorted(used)):
-        print(i, item)
-        polylist.pop(item-i)
-    
+    return used
 
+def depromote(polylist):
     for i in range(len(polylist)):
         if len(polylist[i].terms) == 1 and polylist[i].terms[0].power == 1 and polylist[i].coefficient == 1:
             polylist[i] = polylist[i].terms[0].term
         elif len(polylist[i].terms) == 0:
             polylist[i] = MNumber(polylist[i].coefficient)
+
+def combineaddterms(polylist):
+    promotetomathterm(polylist)
+
+    used = getmatches(polylist)
+    used |= clearzeroes(polylist)
+
+    for i, item in enumerate(sorted(used)):
+        polylist.pop(item-i)
+    
+    depromote(polylist)
 
 
 def candivide(term, divisor):
@@ -173,6 +190,7 @@ def commondivide(terms, divisor):
             terms[i] = 1
         elif isinstance(term, MathTerm):
             for j,subterm in enumerate(term.terms):
+                print('commondivideeq')
                 if subterm.term == divisor:
                     subterm.power -= 1
                     if subterm.power == 0:
@@ -189,7 +207,17 @@ def commondivide(terms, divisor):
 
 
 
-def simplify(obj):
+def simplify(obj, force = False):
+    if isinstance(obj, Variable) or isinstance(obj, MNumber) or isinstance(obj, MFunction):
+        return obj.copy()
+    if obj.issimplified() and not force:
+        return obj.copy()
+    os = str(type(obj))
+    if os in tdict:
+        tdict[os] += 1
+    else:
+        tdict[os] = 1
+    #print('Simplifying:',type(obj))
     numerator, denominator = getnumdenom(obj)
     assert not isinstance(numerator, RationalFunction)
     assert not isinstance(denominator, RationalFunction)
@@ -250,8 +278,11 @@ def simplify(obj):
         numerator = numerator.terms[0]
 
     if denominator == MNumber(1):
-        return numerator
-    return RationalFunction([numerator, denominator])
+        toreturn = numerator
+    else:
+        toreturn = RationalFunction([numerator, denominator])
+    toreturn.setsimplified()
+    return toreturn
 
 
 from Polynomial import Polynomial

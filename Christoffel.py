@@ -23,8 +23,9 @@ theta = Variable('θ')
     #[0, 0, 0, Variable('r')**2]
 #]
 #[[θ²,0],[0,r²]] -> cool!
+#[[r²,0], [0,θ²]] -> stretchy rectangle
 #[[-1,0],[0,r²]] -> hyperbolic coords?
-metric = [[2*theta,0],
+metric = [[r**2+(theta)**2,0],
           [0,1+r**2]]
 dim = 2
 constantcoords = ''
@@ -126,24 +127,26 @@ def christoffel(u,a,b):
     return suum
 
 #a= (christoffel(3,1,3))
-for u in range(dim):
-    for a in range(dim):
-        for b in range(dim):
-            try:
-                assert christoffel(u,a,b) == christoffel(u,b,a)
-            except AssertionError:
-                print('CHRISTOFFEL FAIL')
-                print(u,a,b)
-                one = christoffel(u,a,b)
-                two = christoffel(u,b,a)
-                three = one-two
-                print(one,two, three)
-                print(three)
-                print()
-                exit()
+def checkchristoffels(christoffel):
+    for u in range(dim):
+        for a in range(dim):
+            for b in range(dim):
+                try:
+                    assert christoffel(u,a,b) == christoffel(u,b,a)
+                except AssertionError:
+                    print('CHRISTOFFEL FAIL')
+                    print(u,a,b)
+                    one = christoffel(u,a,b)
+                    two = christoffel(u,b,a)
+                    three = one-two
+                    print(one,two, three)
+                    print(three)
+                    print()
+                    exit()
+checkchristoffels(christoffel)
 #christoffelrivs = [[[[grderiv(christoffel(a,b,u),coordnames[v]) for u in range(dim)] for a in range(dim)] for b in range(dim)] for v in range(dim)]
 
-
+print('christoffels done in',time()-tim)
 
 
 riemannups = [[[[None for _ in range(dim)] for _ in range(dim)] for _ in range(dim)] for _ in range(dim)]
@@ -154,58 +157,57 @@ def Riemannup(a,b,u,v):
         return riemannups[a][b][u][v]
     suum = Ex()
     suum += grderiv(christoffel(a,b,v),u)
-    print('t1->',grderiv(christoffel(a,b,v),u))
+    #rint('t1->',grderiv(christoffel(a,b,v),u))
     suum -= grderiv(christoffel(a,b,u),v)
-    print('t2->',grderiv(christoffel(a,b,u),v))
+    #rint('t2->',grderiv(christoffel(a,b,u),v))
     for c in range(dim):
         suum += christoffel(a,u,c)*christoffel(c,b,v)
-        print('t3 ('+str(c)+') ->',christoffel(a,u,c)*christoffel(c,b,v))
-        print('t4 ('+str(c)+') ->',christoffel(a,v,c)*christoffel(c,b,u))
+        #rint('t3 ('+str(c)+') ->',christoffel(a,u,c)*christoffel(c,b,v))
+        #rint('t4 ('+str(c)+') ->',christoffel(a,v,c)*christoffel(c,b,u))
         suum -= christoffel(a,v,c)*christoffel(c,b,u)
+    suum = suum.simplified()
+    riemannups[a][b][u][v] = suum
+    return suum
 
-    riemannups[a][b][u][v] = suum.simplified()
-    print(suum)
-    return suum.simplified()
-try:
-    print(Riemannup(0,1,0,1))
-except Exception as e:
-    print(e)
-#exit()
 #R_abuv = g_acR^c_buv
 def Riemanndown(a,b,u,v):
     if riemanndowns[a][b][u][v] is not None:
         return riemanndowns[a][b][u][v]
     suum = Ex()
     for c in range(dim):
-        #print(suum, metric[a][c], Riemannup(c,b,u,v))
         suum += metric[a][c] * Riemannup(c,b,u,v)
-    riemanndowns[a][b][u][v] = suum.simplified()
-    return suum.simplified()
+    suum = suum.simplified()
+    riemanndowns[a][b][u][v] = suum
+    return suum
 
-#print(metric[1][1], type(metric[1][1].terms[0].terms[1].term))
-print(Riemannup(0,1,0,1))
-#exit()
-for i in range(dim):
-    for j in range(dim):
-        for k in range(dim):
-            for l in range(dim):
-                try:
-                    assert Riemanndown(i,j,k,l) == Riemanndown(k,l,i,j)
-                    assert Riemanndown(i,j,k,l) == -Riemanndown(j,i,k,l)
-                    assert Riemanndown(i,j,k,l) == -Riemanndown(i,j,l,k)
-                except AssertionError:
-                    print('RIEMANN ERROR')
-                    a = Riemanndown(i,j,k,l)
-                    b = Riemanndown(k,l,i,j)
-                    c = -Riemanndown(j,i,k,l)
-                    d = -Riemanndown(i,j,l,k)
-                    print(i,j,k,l)
-                    print((a-b).simplified(),'==',0)
-                    print((a-c).simplified(),'==',0)
-                    print(a,'-',c)
-                    print((a-d).simplified(),'==',0)
-                    exit()
-#print(time()-tim)
+def checkriemanns(Riemanndown):
+    for i in range(dim):
+        for j in range(dim):
+            for k in range(dim):
+                for l in range(dim):
+                    try:
+                        assert Riemanndown(i,j,k,l) == Riemanndown(k,l,i,j)
+                        assert Riemanndown(i,j,k,l) == -Riemanndown(j,i,k,l)
+                        assert Riemanndown(i,j,k,l) == -Riemanndown(i,j,l,k)
+                    except AssertionError:
+                        print('RIEMANN ERROR')
+                        a = Riemanndown(i,j,k,l)
+                        b = Riemanndown(k,l,i,j)
+                        c = -Riemanndown(j,i,k,l)
+                        d = -Riemanndown(i,j,l,k)
+                        print(i,j,k,l)
+                        print((a-b).simplified(),'==',0)
+                        print((a-c).simplified(),'==',0)
+                        print(a,'-',c)
+                        print((a-d).simplified(),'==',0)
+                        exit()
+import cProfile
+import sys
+sys.stdout = open('cprofilelog.txt','w+')
+cProfile.run("checkriemanns(Riemanndown)",sort=2)
+from simplify import tdict
+print(tdict)
+print('riemanns done in',time()-tim)
 
 def Riccidown(a,b):
     suum = Ex()
@@ -218,15 +220,15 @@ for i in range(dim):
     for j in range(dim):
         ricciscalar += Riccidown(i,j) * metric[i][j]
 ricciscalar = ricciscalar.simplified()
-
+print('ricci scalar done in', time()-tim)
 if __name__ == '__main__':
     for i in range(dim):
         p(christoffels[i],10*i,0,1.5)
 
-    plt.show()
+    #plt.show()
 
     pf(lambda x,y:Riemanndown(0,1,x,y))
     pf(Riccidown, xoffset=10)
     print('R =',ricciscalar)
-    plt.show()
+    #plt.show()
     print('done"')

@@ -168,6 +168,7 @@ class MathTerm(MathInterface):
         return coef, varys
     
     def canaddcombine(self,other):
+        print('canaddcombinecall')
         self = self.simplified()
         if not isinstance(self, MathTerm):
             return self.canaddcombine(other)
@@ -216,7 +217,6 @@ class MathTerm(MathInterface):
             
     def derivative(self, respectto):
         result = Polynomial()
-        self = self.simplified()
         if type(self) != MathTerm:
             return self.derivative(respectto)
         for i in range(len(self.terms)):
@@ -233,6 +233,18 @@ class MathTerm(MathInterface):
         if result == 0:
             return MNumber(0)
         return result
+    
+    def mtvsmt(self,other):
+        print('huh')
+        return super().__eq__(other)
+
+
+    def __eq__(self, other):
+        if isinstance(other,MNumber) or isinstance(other, Number) and other == 0:
+            return self.coefficient == 0                    
+        if isinstance(other, MFunction):
+            return len(self.terms) == 1 and self.terms[0].power == 1 and self.terms[0].term == other
+        return super().__eq__(other)
 
         
 
@@ -338,3 +350,4 @@ from Polynomial import Polynomial
 from Variable import Variable
 from MNumber import MNumber
 from RationalFunction import RationalFunction
+from Function import MFunction

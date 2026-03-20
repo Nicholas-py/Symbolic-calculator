@@ -1,3 +1,5 @@
+
+
 from Christoffel import *
 from MNumber import MNumber
 coordnames = 'rθ'
@@ -6,8 +8,9 @@ print(coordnames,dim)
 
 v1 = [1,0]
 v2 = [0,1]
-pos = (0,2)
+pos = (1,1)
 vecdict = {pos:([pos[0],pos[1]],v1,v2)}
+numsteps = 7
 
 xcoords = [0]
 ycoords = [0]
@@ -64,7 +67,6 @@ def walk(dir,rtpos):
     else:
         vecdict[(round(rtpos[0],5),round(rtpos[1],5))] = (xypos, v1,v2) 
 
-numsteps = 4  
 try:
     for i in range(numsteps):
         walk(1,(i+pos[0],pos[1]))

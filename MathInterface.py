@@ -1,7 +1,6 @@
 from abc import *
 from numbers import Number
 
-
 class MathInterface(ABC):
     @abstractmethod
     def __init__(self, arg):
@@ -10,6 +9,12 @@ class MathInterface(ABC):
     def simplified(self):
         from simplify import simplify
         return simplify(self)
+
+    def issimplified(self):
+        return False
+
+    def setsimplified(self, val=True):
+        self.issimplified = lambda : val
 
     @abstractmethod
     def copy(self):
@@ -83,6 +88,7 @@ class MathInterface(ABC):
     def __eq__(self, other):
         if not (isinstance(other, MathInterface) or isinstance(other, Number)):
             return False
+        #print('Callfromeq', type(self))
         simp = self.simplified()
         
         if other == 0:

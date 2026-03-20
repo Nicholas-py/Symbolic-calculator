@@ -48,7 +48,7 @@ class Polynomial(MathInterface):
         for i in self.terms:
             for j in range(len(new.terms)):
                 if new.terms[j].canaddcombine(i):
-                    new.terms[j] = (new.terms[j]+i).simplified()
+                    new.terms[j] = (new.terms[j]+i)
                     if new.terms[j] == 0:
                         new.terms.pop(j)
                     break
@@ -87,6 +87,12 @@ class Polynomial(MathInterface):
     def __mul__(self,other):
         if other == 0:
             return MNumber(0)
+        if isinstance(other, Polynomial):
+            new = Polynomial()
+            for i in self.terms:
+                for j in other.terms:
+                    new.terms.append(i*j)
+            return new
         if isinstance(other, RationalFunction):
             return NotImplemented
         elif isinstance(other, MathInterface):
@@ -106,7 +112,6 @@ class Polynomial(MathInterface):
         return self
 
     def __repr__(self, latex = False):
-        #self.simplify()
         if self.terms == []:
             return '0'
         string = ''
@@ -145,7 +150,7 @@ class Polynomial(MathInterface):
             new.terms.append(other)
             return new
         if isinstance(other, Number):
-            return self + MathTerm(other)
+            return self + MNumber(other)
         return NotImplemented
     
     def oneoverself(self):

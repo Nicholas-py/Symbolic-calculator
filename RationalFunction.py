@@ -82,7 +82,7 @@ class RationalFunction(MathInterface):
         a.numerator, a.denominator = a.denominator, a.numerator
         if a.numerator is None:
             a.numerator = MNumber(1)
-        return a.simplified()
+        return a
 
     def __add__(self, other):
         if other == 0:
@@ -93,7 +93,6 @@ class RationalFunction(MathInterface):
             d2 = other.denominator if other.denominator is not None else MNumber(1)
             a.denominator = d1 * d2
             a.numerator = self.numerator * d2 + other.numerator * d1
-            a = a.simplified()
             return a
         elif isinstance(other, MathInterface) or isinstance(other, Number):
             if self.denominator is None:
@@ -101,7 +100,7 @@ class RationalFunction(MathInterface):
             a = RationalFunction()
             a.denominator = self.denominator
             a.numerator = self.numerator + other * self.denominator
-            return a.simplified()
+            return a
         return NotImplemented
     
     def __mul__(self, other):
@@ -141,7 +140,7 @@ class RationalFunction(MathInterface):
         num =  self.numerator.derivative(respectto) * self.denominator - self.denominator.derivative(respectto) * self.numerator
         denom = self.denominator**2
         a = RationalFunction([num, denom])
-        return a.simplified()
+        return a
 
 
 from MathTerm import MathTerm

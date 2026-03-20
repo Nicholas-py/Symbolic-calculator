@@ -1,0 +1,97 @@
+         334502834 function calls (334492699 primitive calls) in 115.057 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000  115.057  115.057 {built-in method builtins.exec}
+        1    0.000    0.000  115.057  115.057 <string>:1(<module>)
+        1    0.001    0.001  115.057  115.057 Christoffel.py:183(checkriemanns)
+ 1208/566    0.006    0.000  114.633    0.203 MathInterface.py:9(simplified)
+ 1208/566    0.116    0.000  114.629    0.203 simplify.py:212(simplify)
+     2336    0.073    0.000  110.183    0.047 simplify.py:131(combineaddterms)
+     2336   68.306    0.029  109.951    0.047 simplify.py:110(getmatches)
+       96    0.000    0.000  109.701    1.143 Christoffel.py:173(Riemanndown)
+       32    0.001    0.000  109.604    3.425 Christoffel.py:155(Riemannup)
+310667633   37.304    0.000   41.594    0.000 simplify.py:102(forloopcontents)
+6834/1526    0.022    0.000    5.667    0.004 MathInterface.py:88(__eq__)
+  2494758    2.163    0.000    4.262    0.000 simplify.py:88(matches)
+  8042161    1.528    0.000    2.454    0.000 {built-in method builtins.isinstance}
+  5258746    1.506    0.000    2.103    0.000 Variable.py:85(__eq__)
+ 1002/946    0.112    0.000    2.076    0.002 Polynomial.py:87(__mul__)
+2610/1974    0.087    0.000    2.061    0.001 simplify.py:23(removerationalsfrom)
+   149710    0.242    0.000    1.642    0.000 MathTerm.py:98(__mul__)
+   208775    0.828    0.000    1.608    0.000 MathTerm.py:156(copy)
+ 1200/958    0.002    0.000    1.407    0.001 MathInterface.py:48(__sub__)
+      209    0.009    0.000    1.406    0.007 Polynomial.py:110(__imul__)
+       12    0.003    0.000    1.327    0.111 RationalFunction.py:87(__add__)
+2902/2478    0.006    0.000    1.198    0.000 Polynomial.py:135(__add__)
+     2336    0.303    0.000    1.156    0.000 simplify.py:46(simplifymathterms)
+  1976239    0.467    0.000    0.926    0.000 <frozen abc>:117(__instancecheck__)
+  1976239    0.459    0.000    0.459    0.000 {built-in method _abc._abc_instancecheck}
+5204/4789    0.040    0.000    0.454    0.000 Polynomial.py:40(copy)
+   125499    0.310    0.000    0.402    0.000 simplify.py:75(combinemathterms)
+   210975    0.087    0.000    0.335    0.000 MathTerm.py:16(__init__)
+   394296    0.282    0.000    0.335    0.000 Variable.py:10(copy)
+      402    0.002    0.000    0.292    0.001 RationalFunction.py:106(__mul__)
+     2454    0.069    0.000    0.248    0.000 simplify.py:37(removepolynomialsfrom)
+     1168    0.003    0.000    0.222    0.000 simplify.py:4(getnumdenom)
+3634/1864    0.003    0.000    0.167    0.000 MathInterface.py:59(__rmul__)
+       32    0.001    0.000    0.145    0.005 Christoffel.py:33(grderiv)
+   704165    0.138    0.000    0.138    0.000 {method 'append' of 'list' objects}
+   787385    0.132    0.000    0.132    0.000 {built-in method builtins.len}
+   249820    0.086    0.000    0.119    0.000 Variable.py:46(canaddcombine)
+      957    0.002    0.000    0.112    0.000 RationalFunction.py:8(__init__)
+       56    0.000    0.000    0.102    0.002 RationalFunction.py:134(evaluate)
+      649    0.001    0.000    0.071    0.000 RationalFunction.py:48(copy)
+   116427    0.071    0.000    0.071    0.000 {method 'pop' of 'list' objects}
+       56    0.000    0.000    0.070    0.001 MathInterface.py:74(__truediv__)
+   393478    0.055    0.000    0.055    0.000 MathTerm.py:8(__init__)
+   394332    0.052    0.000    0.052    0.000 Variable.py:4(__init__)
+     2336    0.027    0.000    0.050    0.000 simplify.py:97(promotetomathterm)
+       28    0.000    0.000    0.043    0.002 RationalFunction.py:137(derivative)
+   127835    0.037    0.000    0.037    0.000 {built-in method builtins.sorted}
+     9682    0.012    0.000    0.035    0.000 Polynomial.py:10(__init__)
+      112    0.001    0.000    0.032    0.000 Polynomial.py:171(evaluate)
+      162    0.000    0.000    0.030    0.000 RationalFunction.py:131(equalszero)
+   116633    0.028    0.000    0.028    0.000 {method 'add' of 'set' objects}
+     1168    0.008    0.000    0.024    0.000 simplify.py:161(findcommondivisor)
+     1232    0.001    0.000    0.024    0.000 MathInterface.py:53(__neg__)
+      360    0.002    0.000    0.024    0.000 MathTerm.py:188(evaluate)
+      496    0.001    0.000    0.022    0.000 MathInterface.py:61(__pow__)
+     2336    0.019    0.000    0.020    0.000 simplify.py:117(clearzeroes)
+    11734    0.005    0.000    0.018    0.000 MNumber.py:10(__init__)
+       28    0.000    0.000    0.016    0.001 Polynomial.py:177(derivative)
+      466    0.001    0.000    0.014    0.000 Variable.py:71(__mul__)
+     2336    0.008    0.000    0.013    0.000 simplify.py:124(depromote)
+     3502    0.003    0.000    0.013    0.000 MNumber.py:39(__mul__)
+       56    0.000    0.000    0.013    0.000 MathInterface.py:81(__rtruediv__)
+     6540    0.007    0.000    0.012    0.000 MathTerm.py:11(copy)
+       52    0.000    0.000    0.010    0.000 MathTerm.py:218(derivative)
+     3818    0.002    0.000    0.010    0.000 MNumber.py:51(simplified)
+     4689    0.003    0.000    0.010    0.000 MNumber.py:22(copy)
+       56    0.000    0.000    0.010    0.000 Polynomial.py:156(oneoverself)
+     2504    0.003    0.000    0.009    0.000 simplify.py:143(candivide)
+     2506    0.002    0.000    0.007    0.000 MathTerm.py:242(__eq__)
+      950    0.001    0.000    0.002    0.000 MNumber.py:33(__add__)
+     1112    0.001    0.000    0.001    0.000 MathInterface.py:16(setsimplified)
+      518    0.000    0.000    0.001    0.000 Variable.py:41(evaluate)
+     4824    0.001    0.000    0.001    0.000 Variable.py:7(__repr__)
+     2904    0.001    0.000    0.001    0.000 MNumber.py:28(equalszero)
+      680    0.000    0.000    0.000    0.000 Polynomial.py:159(equalszero)
+     1168    0.000    0.000    0.000    0.000 MathInterface.py:13(issimplified)
+       72    0.000    0.000    0.000    0.000 Variable.py:22(derivative)
+       42    0.000    0.000    0.000    0.000 MNumber.py:49(evaluate)
+      160    0.000    0.000    0.000    0.000 Christoffel.py:114(christoffel)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+       16    0.000    0.000    0.000    0.000 MNumber.py:30(derivative)
+       20    0.000    0.000    0.000    0.000 MathInterface.py:17(<lambda>)
+      104    0.000    0.000    0.000    0.000 MathTerm.py:153(equalszero)
+        1    0.000    0.000    0.000    0.000 <frozen abc>:121(__subclasscheck__)
+        1    0.000    0.000    0.000    0.000 {built-in method _abc._abc_subclasscheck}
+       20    0.000    0.000    0.000    0.000 Variable.py:68(equalszero)
+
+
+{"<class 'MathTerm.MathTerm'>": 2, "<class 'Polynomial.Polynomial'>": 1146, "<class 'RationalFunction.RationalFunction'>": 208}
+riemanns done in 115.1188952922821
+ricci scalar done in 115.42448091506958
+R = 
