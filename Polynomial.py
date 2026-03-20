@@ -157,7 +157,10 @@ class Polynomial(MathInterface):
         return RationalFunction([MNumber(1),self])
 
     def equalszero(self):
-        return self.terms == []
+        simp = self.simplified(callsource='eqpoly')
+        if isinstance(simp, Polynomial):
+            return simp.terms == []
+        return simp == 0
 
     def __getitem__(self, index):
         return self.terms[index]

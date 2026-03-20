@@ -1,6 +1,4 @@
 from MathInterface import MathInterface
-from numbers import Number
-from MNumber import MNumber
 
 class MFunction(MathInterface):
     def __init__(self, arg=1):
@@ -14,6 +12,8 @@ class MFunction(MathInterface):
     def __eq__(self, other):
         if type(other) == type(self):
             return self.contents == other.contents
+        elif isinstance(other, MFunction):
+            return False
         return super().__eq__(other)
     
     def oneoverself(self):
@@ -23,3 +23,5 @@ class MFunction(MathInterface):
 
 
 from RationalFunction import RationalFunction
+from numbers import Number
+from MNumber import MNumber

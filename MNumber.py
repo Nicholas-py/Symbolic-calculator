@@ -48,7 +48,7 @@ class MNumber(MathInterface):
 
     def evaluate(self, var, value):
         return self.copy()
-    def simplified(self):
+    def simplified(self, callsource = 'unknown'):
         return self.copy()
     
     def __float__(self):

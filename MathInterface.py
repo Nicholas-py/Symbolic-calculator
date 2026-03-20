@@ -6,9 +6,9 @@ class MathInterface(ABC):
     def __init__(self, arg):
         pass
 
-    def simplified(self):
+    def simplified(self, callsource = 'unknown'):
         from simplify import simplify
-        return simplify(self)
+        return simplify(self,callsource=callsource)
 
     def issimplified(self):
         return False
@@ -88,11 +88,7 @@ class MathInterface(ABC):
     def __eq__(self, other):
         if not (isinstance(other, MathInterface) or isinstance(other, Number)):
             return False
-        #print('Callfromeq', type(self))
-        simp = self.simplified()
         
         if other == 0:
-            if isinstance(simp, Number):
-                return simp == 0
-            return simp.equalszero()
-        return simp-other == 0
+            return self.equalszero()
+        return self-other == 0

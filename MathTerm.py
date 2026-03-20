@@ -168,11 +168,10 @@ class MathTerm(MathInterface):
         return coef, varys
     
     def canaddcombine(self,other):
-        print('canaddcombinecall')
-        self = self.simplified()
+        self = self.simplified(callsource='mtsimplify')
         if not isinstance(self, MathTerm):
             return self.canaddcombine(other)
-        other = other.simplified()
+        other = other.simplified(callsource='mtsimplify')
         if isinstance(other,MathTerm):
             for i in self.terms:
                 for j in other.terms:

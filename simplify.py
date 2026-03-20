@@ -99,17 +99,48 @@ def promotetomathterm(polylist):
         if not isinstance(polylist[i], MathTerm):
             polylist[i] = MathTerm(polylist[i])
 
+def roughhash(mathterm):
+    itms = []
+    for i in mathterm.terms:
+        if isinstance(i.term, Variable):
+            itms.append(str(i.power)+str(i.term))
+        else:
+            itms.append(str(i.power)+str(type(i).__name__))
+    itms.sort()
+    return ' '.join(itms)
+
+def getmatches2(polylist):
+    termset = {}
+    deathset = set()
+    for i, term in enumerate(polylist):
+        rhash = roughhash(term)
+        if rhash not in termset:
+            termset[rhash] = i
+        else:
+            if matches(term, polylist[termset[rhash]]) and matches(polylist[termset[rhash]], term):
+                polylist[termset[rhash]].coefficient += term.coefficient
+                deathset.add(i)
+    return deathset
+
+
+    #create set + deathset
+    #cycle through list, put rough hashes in w/ indexes
+    #if one is already in set:
+    #cycle through both non-variable terms
+    #compare using matches() equivalent
+    #if match, add to deathset + change coefficient
+    #return deathset
+    pass
 
 def getmatches(polylist):
     used = set()
     for i in range(len(polylist)):
         for j in range(i+1,len(polylist)):
             if i in used or j in used:
-                return
+                continue
             if matches(polylist[i], polylist[j]) and matches(polylist[j], polylist[i]):
                 polylist[i].coefficient += polylist[j].coefficient
                 used.add(j)
-
     return used
 
 def clearzeroes(polylist):
@@ -129,7 +160,7 @@ def depromote(polylist):
 def combineaddterms(polylist):
     promotetomathterm(polylist)
 
-    used = getmatches(polylist)
+    used = getmatches2(polylist)
     used |= clearzeroes(polylist)
 
     for i, item in enumerate(sorted(used)):
@@ -205,19 +236,26 @@ def commondivide(terms, divisor):
         else:
             raise TypeError("Incorrect type when dividing")
 
-
-
-def simplify(obj, force = False):
-    if isinstance(obj, Variable) or isinstance(obj, MNumber) or isinstance(obj, MFunction):
-        return obj.copy()
-    if obj.issimplified() and not force:
-        return obj.copy()
+def updatedict(obj, callsource):
     os = str(type(obj))
     if os in tdict:
         tdict[os] += 1
     else:
         tdict[os] = 1
-    #print('Simplifying:',type(obj))
+    if callsource in tdict:
+        tdict[callsource] += 1
+    else:
+        tdict[callsource] = 1
+
+
+
+def simplify(obj, force = False, callsource = 'unknown'):
+    if isinstance(obj, Variable) or isinstance(obj, MNumber) or isinstance(obj, MFunction):
+        return obj.copy()
+    if obj.issimplified() and not force:
+        return obj.copy()
+    updatedict(obj, callsource)
+
     numerator, denominator = getnumdenom(obj)
     assert not isinstance(numerator, RationalFunction)
     assert not isinstance(denominator, RationalFunction)

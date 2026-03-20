@@ -34,7 +34,7 @@ class Ln(MFunction):
 
     def __add__(self, other):
         if isinstance(other,Number):
-            return Polynomial(terms=[self.copy(),other])
+            return Polynomial(terms=[self.copy(), MNumber(other)])
         if self.canaddcombine(other):
             if isinstance(other, Ln):
                 if self.contents == other.contents:

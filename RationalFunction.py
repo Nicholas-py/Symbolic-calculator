@@ -1,7 +1,6 @@
 from MathInterface import MathInterface
 from numbers import Number
 from warnings import warn
-from Polynomial import Polynomial
 
 #Guaranteed a numerator, but not a denominator
 class RationalFunction(MathInterface):
@@ -129,7 +128,7 @@ class RationalFunction(MathInterface):
         return NotImplemented
 
     def equalszero(self):
-        return self.numerator == 0
+        return self.numerator.simplified(callsource='rateq') == 0
     
     def evaluate(self,val, value):
         return self.numerator.evaluate(val, value)/self.denominator.evaluate(val, value)
@@ -145,3 +144,4 @@ class RationalFunction(MathInterface):
 
 from MathTerm import MathTerm
 from MNumber import MNumber
+from Polynomial import Polynomial

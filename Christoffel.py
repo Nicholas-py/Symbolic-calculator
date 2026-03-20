@@ -4,6 +4,7 @@ from Variable import Variable
 from MathTerm import MathTerm
 import matplotlib.pyplot as plt
 from numbers import Number
+from Sinfunc import Sin
 from time import time
 tim = time()
 coordnames = 'rθ'
@@ -25,8 +26,9 @@ theta = Variable('θ')
 #[[θ²,0],[0,r²]] -> cool!
 #[[r²,0], [0,θ²]] -> stretchy rectangle
 #[[-1,0],[0,r²]] -> hyperbolic coords?
-metric = [[r**2+(theta)**2,0],
-          [0,1+r**2]]
+#[[r²+θ²,0],[0,r²]] -> unknown
+metric = [[r**2,0],
+          [0,r**2*Sin(theta)*82]]
 dim = 2
 constantcoords = ''
 
@@ -122,7 +124,7 @@ def christoffel(u,a,b):
             gup = 1/metric[c][u]
         base = mderiv(a,c,b)+mderiv(b,c,a)-mderiv(a,b,c)
         suum += gup * base * 0.5
-    suum = suum.simplified()
+    suum = suum.simplified(callsource='christoffel')
     christoffels[u][a][b] = suum
     return suum
 
@@ -165,7 +167,7 @@ def Riemannup(a,b,u,v):
         #rint('t3 ('+str(c)+') ->',christoffel(a,u,c)*christoffel(c,b,v))
         #rint('t4 ('+str(c)+') ->',christoffel(a,v,c)*christoffel(c,b,u))
         suum -= christoffel(a,v,c)*christoffel(c,b,u)
-    suum = suum.simplified()
+    suum = suum.simplified(callsource='riemannup')
     riemannups[a][b][u][v] = suum
     return suum
 
@@ -176,7 +178,7 @@ def Riemanndown(a,b,u,v):
     suum = Ex()
     for c in range(dim):
         suum += metric[a][c] * Riemannup(c,b,u,v)
-    suum = suum.simplified()
+    suum = suum.simplified(callsource='riemanndown')
     riemanndowns[a][b][u][v] = suum
     return suum
 
@@ -201,12 +203,16 @@ def checkriemanns(Riemanndown):
                         print(a,'-',c)
                         print((a-d).simplified(),'==',0)
                         exit()
-import cProfile
-import sys
-sys.stdout = open('cprofilelog.txt','w+')
-cProfile.run("checkriemanns(Riemanndown)",sort=2)
-from simplify import tdict
-print(tdict)
+if __name__ == '__main__':
+    import cProfile
+    import sys
+    sys.stdout = open('cprofilelog.txt','w+')
+    cProfile.run("checkriemanns(Riemanndown)",sort=2)
+    from simplify import tdict
+    sys.stdout = sys.__stdout__
+    print(tdict)
+else:
+    checkriemanns(Riemanndown)
 print('riemanns done in',time()-tim)
 
 def Riccidown(a,b):
